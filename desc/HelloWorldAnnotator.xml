@@ -5,7 +5,7 @@
 	<annotatorImplementationName>de.averbis.tutorials.HelloWorldAnnotator</annotatorImplementationName>
 	<analysisEngineMetaData>
 		<name>Hello World Annotator</name>
-		<description>A Hello World Annotator</description>
+		<description>A Hello World Annotator that annotates the entire document text with a HelloWorldAnnotation</description>
 		<version>1.0</version>
 		<vendor>Averbis</vendor>
 	<configurationParameters/>
@@ -28,6 +28,7 @@
     </typeSystemDescription>
     <typePriorities/>
     <fsIndexCollection/>
+    <capabilities/>
     <operationalProperties>
       <modifiesCas>true</modifiesCas>
       <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
