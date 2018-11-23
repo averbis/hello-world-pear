@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+	<frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+	<primitive>true</primitive>
+	<annotatorImplementationName>de.averbis.tutorials.HelloWorldAnnotator</annotatorImplementationName>
+	<analysisEngineMetaData>
+		<name>Hello World Annotator</name>
+		<description>A Hello World Annotator</description>
+		<version>1.0</version>
+		<vendor>Averbis</vendor>
+	<configurationParameters/>
+    <configurationParameterSettings/>
+    <typeSystemDescription>
+      <types>
+        <typeDescription>
+          <name>de.averbis.tutorials.HelloWorldAnnotation</name>
+          <description>A Hello World AnnotationType</description>
+          <supertypeName>uima.tcas.Annotation</supertypeName>
+          <features>
+            <featureDescription>
+              <name>greeting</name>
+              <description>The greeting of the HelloWorldAnnotation</description>
+              <rangeTypeName>uima.cas.String</rangeTypeName>
+            </featureDescription>
+          </features>
+        </typeDescription>
+      </types>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+<resourceManagerConfiguration/>
+</analysisEngineDescription>
