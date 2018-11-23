@@ -1,6 +1,6 @@
 
-/* First created by JCasGen Fri Nov 23 21:49:30 CET 2018 */
-package de.averbis.tutorials;
+/* First created by JCasGen Fri Nov 23 22:14:28 CET 2018 */
+package de.averbis.tutorials.typesystem;
 
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
@@ -11,7 +11,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A Hello World AnnotationType
- * Updated by JCasGen Fri Nov 23 21:49:30 CET 2018
+ * Updated by JCasGen Fri Nov 23 22:14:28 CET 2018
  * @generated */
 public class HelloWorldAnnotation_Type extends Annotation_Type {
   /** @generated */
@@ -20,7 +20,7 @@ public class HelloWorldAnnotation_Type extends Annotation_Type {
   /** @generated 
      @modifiable */
   @SuppressWarnings ("hiding")
-  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.averbis.tutorials.HelloWorldAnnotation");
+  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.averbis.tutorials.typesystem.HelloWorldAnnotation");
  
   /** @generated */
   final Feature casFeat_greeting;
@@ -32,7 +32,7 @@ public class HelloWorldAnnotation_Type extends Annotation_Type {
    */ 
   public String getGreeting(int addr) {
         if (featOkTst && casFeat_greeting == null)
-      jcas.throwFeatMissing("greeting", "de.averbis.tutorials.HelloWorldAnnotation");
+      jcas.throwFeatMissing("greeting", "de.averbis.tutorials.typesystem.HelloWorldAnnotation");
     return ll_cas.ll_getStringValue(addr, casFeatCode_greeting);
   }
   /** @generated
@@ -41,7 +41,7 @@ public class HelloWorldAnnotation_Type extends Annotation_Type {
    */    
   public void setGreeting(int addr, String v) {
         if (featOkTst && casFeat_greeting == null)
-      jcas.throwFeatMissing("greeting", "de.averbis.tutorials.HelloWorldAnnotation");
+      jcas.throwFeatMissing("greeting", "de.averbis.tutorials.typesystem.HelloWorldAnnotation");
     ll_cas.ll_setStringValue(addr, casFeatCode_greeting, v);}
     
   

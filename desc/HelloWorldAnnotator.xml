@@ -13,7 +13,7 @@
     <typeSystemDescription>
       <types>
         <typeDescription>
-          <name>de.averbis.tutorials.HelloWorldAnnotation</name>
+          <name>de.averbis.tutorials.typesystem.HelloWorldAnnotation</name>
           <description>A Hello World AnnotationType</description>
           <supertypeName>uima.tcas.Annotation</supertypeName>
           <features>

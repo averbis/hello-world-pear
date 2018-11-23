@@ -1,7 +1,7 @@
 
 
-/* First created by JCasGen Fri Nov 23 21:49:30 CET 2018 */
-package de.averbis.tutorials;
+/* First created by JCasGen Fri Nov 23 22:14:28 CET 2018 */
+package de.averbis.tutorials.typesystem;
 
 import org.apache.uima.jcas.JCas; 
 import org.apache.uima.jcas.JCasRegistry;
@@ -11,7 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A Hello World AnnotationType
- * Updated by JCasGen Fri Nov 23 21:49:30 CET 2018
+ * Updated by JCasGen Fri Nov 23 22:14:28 CET 2018
  * XML source: /home/christian/src/hello-world-pear/desc/HelloWorldAnnotator.xml
  * @generated */
 public class HelloWorldAnnotation extends Annotation {
@@ -37,7 +37,7 @@ public class HelloWorldAnnotation extends Annotation {
     
   /** Internal - constructor used by generator 
    * @generated
-   * @param addr low level Feature Structure reference
+   * @param addr low level Feature Structure referenceHelloWorldAnnotation
    * @param type the type of this Feature Structure 
    */
   public HelloWorldAnnotation(int addr, TOP_Type type) {
@@ -85,7 +85,7 @@ public class HelloWorldAnnotation extends Annotation {
    */
   public String getGreeting() {
     if (HelloWorldAnnotation_Type.featOkTst && ((HelloWorldAnnotation_Type)jcasType).casFeat_greeting == null)
-      jcasType.jcas.throwFeatMissing("greeting", "de.averbis.tutorials.HelloWorldAnnotation");
+      jcasType.jcas.throwFeatMissing("greeting", "de.averbis.tutorials.typesystem.HelloWorldAnnotation");
     return jcasType.ll_cas.ll_getStringValue(addr, ((HelloWorldAnnotation_Type)jcasType).casFeatCode_greeting);}
     
   /** setter for greeting - sets The greeting of the HelloWorldAnnotation 
@@ -94,7 +94,7 @@ public class HelloWorldAnnotation extends Annotation {
    */
   public void setGreeting(String v) {
     if (HelloWorldAnnotation_Type.featOkTst && ((HelloWorldAnnotation_Type)jcasType).casFeat_greeting == null)
-      jcasType.jcas.throwFeatMissing("greeting", "de.averbis.tutorials.HelloWorldAnnotation");
+      jcasType.jcas.throwFeatMissing("greeting", "de.averbis.tutorials.typesystem.HelloWorldAnnotation");
     jcasType.ll_cas.ll_setStringValue(addr, ((HelloWorldAnnotation_Type)jcasType).casFeatCode_greeting, v);}    
   }
 
