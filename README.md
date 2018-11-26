@@ -4,8 +4,8 @@ An Apache UIMA Hello World Annotator bundled as a PEAR package
 
 ## Build prerequisites
 
-- Java 8
-- Maven
+- JDK 1.8 or later
+- Maven 3.5 or later
 
 ## Build instructions
     mvn clean install
