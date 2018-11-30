@@ -34,7 +34,7 @@
 							<phase>package</phase>
 							<configuration>
 								<mainComponentDesc>desc/HelloWorldAnnotator.xml</mainComponentDesc>
-								<componentId>HelloWorldAnnotator</componentId>
+								<componentId>${project.artifactId}-${project.version}</componentId>
 								<datapath>$main_root/resources</datapath>
 							</configuration>
 							<goals>
