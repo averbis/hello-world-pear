@@ -6,7 +6,7 @@
 	<analysisEngineMetaData>
 		<name>Hello World Annotator</name>
 		<description>A Hello World Annotator that annotates the entire document text with a HelloWorldAnnotation</description>
-		<version>1.0</version>
+		<version>1.1.0-SNAPSHOT</version>
 		<vendor>Averbis</vendor>
 	<configurationParameters/>
     <configurationParameterSettings/>
