@@ -1,6 +1,3 @@
-/**
- * Hello World Annotator implementation
- */
 package de.averbis.tutorials;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
@@ -15,7 +12,8 @@ public class HelloWorldAnnotator extends JCasAnnotator_ImplBase {
 	public void process(JCas jcas) throws AnalysisEngineProcessException {
 		
 		/*
-		 * Adds a new HelloWorldAnnotation with a greeting that spans the entire document text
+		 * Adds a new HelloWorldAnnotation with a greeting 
+		 * that spans the entire document text
 		 */
 		String documentText = jcas.getDocumentText();
 		
