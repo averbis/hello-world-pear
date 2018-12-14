@@ -8,8 +8,23 @@
 		<description>A Hello World Annotator that annotates the entire document text with a HelloWorldAnnotation</description>
 		<version>1.1.0-SNAPSHOT</version>
 		<vendor>Averbis</vendor>
-	<configurationParameters/>
-    <configurationParameterSettings/>
+	<configurationParameters>
+      <configurationParameter>
+        <name>greeting</name>
+        <description>The greeting message</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>greeting</name>
+        <value>
+          <string>Greetings from the HelloWorldAnnotator</string>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
     <typeSystemDescription>
       <types>
         <typeDescription>
