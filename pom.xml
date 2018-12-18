@@ -8,6 +8,7 @@
 
 	<properties>
 		<uima-version>2.10.2</uima-version>
+		<maven-build-helper-plugin-version>3.0.0</maven-build-helper-plugin-version>
 	</properties>
 
 	<dependencies>
@@ -22,13 +23,58 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.uima</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>${maven-build-helper-plugin-version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.uima</groupId>
+				<artifactId>jcasgen-maven-plugin</artifactId>
+				<version>${uima-version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.uima</groupId>
 				<artifactId>PearPackagingMavenPlugin</artifactId>
-                <version>${uima-version}</version>
+				<version>${uima-version}</version>
 			</plugin>
 		</plugins>
 
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>add-source</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>add-source</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>${project.build.directory}/generated-sources/java/</source>
+								</sources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.uima</groupId>
+					<artifactId>jcasgen-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<phase>generate-sources</phase>
+							<configuration>
+								<typeSystemIncludes>
+									<typeSystemInclude>src/main/resources/desc/*Typesystem.xml</typeSystemInclude>
+								</typeSystemIncludes>
+							</configuration>
+							<goals>
+								<goal>generate</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.uima</groupId>
 					<artifactId>PearPackagingMavenPlugin</artifactId>

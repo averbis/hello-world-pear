@@ -11,20 +11,9 @@
 	<configurationParameters/>
     <configurationParameterSettings/>
     <typeSystemDescription>
-      <types>
-        <typeDescription>
-          <name>de.averbis.tutorials.typesystem.HelloWorldAnnotation</name>
-          <description>A Hello World AnnotationType</description>
-          <supertypeName>uima.tcas.Annotation</supertypeName>
-          <features>
-            <featureDescription>
-              <name>greeting</name>
-              <description>The greeting of the HelloWorldAnnotation</description>
-              <rangeTypeName>uima.cas.String</rangeTypeName>
-            </featureDescription>
-          </features>
-        </typeDescription>
-      </types>
+      <imports>
+      	<import location="HelloWorldTypesystem.xml" />
+      </imports>
     </typeSystemDescription>
     <typePriorities/>
     <fsIndexCollection/>
