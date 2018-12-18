@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+<analysisEngineDescription
+	xmlns="http://uima.apache.org/resourceSpecifier">
 	<frameworkImplementation>org.apache.uima.java</frameworkImplementation>
 	<primitive>true</primitive>
-	<annotatorImplementationName>de.averbis.tutorials.HelloWorldAnnotator</annotatorImplementationName>
+	<annotatorImplementationName>de.averbis.tutorials.HelloWorldAnnotator
+	</annotatorImplementationName>
 	<analysisEngineMetaData>
 		<name>Hello World Annotator</name>
-		<description>A Hello World Annotator that annotates the entire document text with a HelloWorldAnnotation</description>
+		<description>A Hello World Annotator that annotates the entire
+			document text with a HelloWorldAnnotation</description>
 		<version>1.1.0-SNAPSHOT</version>
 		<vendor>Averbis</vendor>
-	<configurationParameters/>
-    <configurationParameterSettings/>
-    <typeSystemDescription>
-      <imports>
-      	<import location="HelloWorldTypesystem.xml" />
-      </imports>
-    </typeSystemDescription>
-    <typePriorities/>
-    <fsIndexCollection/>
-    <capabilities/>
-    <operationalProperties>
-      <modifiesCas>true</modifiesCas>
-      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
-      <outputsNewCASes>false</outputsNewCASes>
-    </operationalProperties>
-  </analysisEngineMetaData>
-<resourceManagerConfiguration/>
+		<configurationParameters />
+		<configurationParameterSettings />
+		<typeSystemDescription>
+			<imports>
+				<import location="HelloWorldTypesystem.xml" />
+			</imports>
+		</typeSystemDescription>
+		<typePriorities />
+		<fsIndexCollection />
+		<capabilities />
+		<operationalProperties>
+			<modifiesCas>true</modifiesCas>
+			<multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+			<outputsNewCASes>false</outputsNewCASes>
+		</operationalProperties>
+	</analysisEngineMetaData>
+	<resourceManagerConfiguration />
 </analysisEngineDescription>
