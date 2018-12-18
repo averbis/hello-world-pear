@@ -68,7 +68,7 @@
 							<phase>generate-sources</phase>
 							<configuration>
 								<typeSystemIncludes>
-									<typeSystemInclude>src/main/resources/desc/*Typesystem.xml</typeSystemInclude>
+									<typeSystemInclude>src/main/resources/desc/HelloWorldTypesystem.xml</typeSystemInclude>
 								</typeSystemIncludes>
 							</configuration>
 							<goals>
