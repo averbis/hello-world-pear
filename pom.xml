@@ -75,6 +75,31 @@
 						</execution>
 					</executions>
 				</plugin>
+					<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>					
+					<execution>
+						<id>copy-descriptors</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<outputDirectory>${basedir}/target/pearPackaging/desc</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/resources/desc/</directory>
+									<includes>
+										<include>**/*.xml</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 				<plugin>
 					<groupId>org.apache.uima</groupId>
 					<artifactId>PearPackagingMavenPlugin</artifactId>
