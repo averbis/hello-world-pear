@@ -8,9 +8,11 @@
 
 	<properties>
 		<uima-version>2.10.3</uima-version>
+		<uimafit-version>2.4.0</uimafit-version>
 		<maven-build-helper-plugin-version>3.0.0</maven-build-helper-plugin-version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
@@ -18,6 +20,12 @@
 			<groupId>org.apache.uima</groupId>
 			<artifactId>uimaj-core</artifactId>
 			<version>${uima-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+		 	<artifactId>uimafit-core</artifactId>
+		 	<version>${uimafit-version}</version>
 		</dependency>
 	</dependencies>
 
@@ -37,6 +45,11 @@
 				<groupId>org.apache.uima</groupId>
 				<artifactId>PearPackagingMavenPlugin</artifactId>
 				<version>${uima-version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.uima</groupId>
+				<artifactId>uimafit-maven-plugin</artifactId>
+				<version>${uimafit-version}</version>
 			</plugin>
 		</plugins>
 
@@ -68,7 +81,7 @@
 							<phase>generate-sources</phase>
 							<configuration>
 								<typeSystemIncludes>
-									<typeSystemInclude>src/main/resources/desc/HelloWorldTypesystem.xml</typeSystemInclude>
+									<typeSystemInclude>src/main/resources/de/averbis/tutorials/typesystem/HelloWorldTypesystem.xml</typeSystemInclude>
 								</typeSystemIncludes>
 							</configuration>
 							<goals>
@@ -78,30 +91,23 @@
 					</executions>
 				</plugin>
 				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-resources-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>copy-descriptors</id>
-							<phase>prepare-package</phase>
-							<goals>
-								<goal>copy-resources</goal>
-							</goals>
-							<configuration>
-								<encoding>UTF-8</encoding>
-								<outputDirectory>${basedir}/target/pearPackaging/desc</outputDirectory>
-								<resources>
-									<resource>
-										<directory>src/main/resources/desc/</directory>
-										<includes>
-											<include>**/*.xml</include>
-										</includes>
-									</resource>
-								</resources>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
+					<groupId>org.apache.uima</groupId>
+					<artifactId>uimafit-maven-plugin</artifactId>		
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<outputDirectory>${basedir}/target/pearPackaging/desc</outputDirectory>		
+						<addTypeSystemDescriptions>EMBEDDED</addTypeSystemDescriptions>				
+					</configuration>		
+					 <executions>
+					    <execution>
+					      <id>default</id>
+					      <phase>process-classes</phase>
+					      <goals>					      
+					        <goal>generate</goal>
+					      </goals>
+					    </execution>
+					  </executions>
+				</plugin>								
 				<plugin>
 					<groupId>org.apache.uima</groupId>
 					<artifactId>PearPackagingMavenPlugin</artifactId>
@@ -110,7 +116,7 @@
 						<execution>
 							<phase>package</phase>
 							<configuration>
-								<mainComponentDesc>desc/HelloWorldAnnotator.xml</mainComponentDesc>
+								<mainComponentDesc>desc/de/averbis/tutorials/HelloWorldAnnotator.xml</mainComponentDesc>
 								<componentId>${project.artifactId}-${project.version}</componentId>
 								<datapath>$main_root/resources</datapath>
 							</configuration>

@@ -16,13 +16,23 @@
 
 package de.averbis.tutorials;
 
-import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 
 import de.averbis.tutorials.typesystem.HelloWorldAnnotation;
 
 public class HelloWorldAnnotator extends JCasAnnotator_ImplBase {
+	
+	public static final String PARAM_GREETING = "greeting";
+	@ConfigurationParameter(
+			name = PARAM_GREETING,
+			mandatory = true,
+			defaultValue = "Greetings from the HelloWorldAnnotator",
+			description = "The greeting message")
+	private String greeting;
+	
 
 	@Override
 	public void process(JCas jcas) throws AnalysisEngineProcessException {
@@ -36,7 +46,7 @@ public class HelloWorldAnnotator extends JCasAnnotator_ImplBase {
 		HelloWorldAnnotation annotation = new HelloWorldAnnotation(jcas);
 		annotation.setBegin(0);
 		annotation.setEnd(documentText.length());
-		annotation.setGreeting("Greetings from the HelloWorldAnnotator");
+		annotation.setGreeting(this.greeting);
 		annotation.addToIndexes();
 	}
 }
