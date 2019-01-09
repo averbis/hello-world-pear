@@ -1,4 +1,4 @@
-# hello-world-pear [![Build Status](https://travis-ci.com/cgaege/hello-world-pear.svg?branch=master)](https://travis-ci.com/cgaege/hello-world-pear)
+# hello-world-pear [![Build Status](https://travis-ci.com/averbis/hello-world-pear.svg?branch=master)](https://travis-ci.com/averbis/hello-world-pear)
 
 An Apache UIMA Hello World Annotator written in Java bundled as a PEAR package.
 
