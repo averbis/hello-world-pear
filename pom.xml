@@ -20,21 +20,23 @@
 			<groupId>org.apache.uima</groupId>
 			<artifactId>uimaj-core</artifactId>
 			<version>${uima-version}</version>
+			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.uima</groupId>
-		 	<artifactId>uimafit-core</artifactId>
-		 	<version>${uimafit-version}</version>
+			<artifactId>uimafit-core</artifactId>
+			<version>${uimafit-version}</version>
+			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>junit</groupId>
-		    <artifactId>junit</artifactId>
-		    <version>4.11</version>
-		    <scope>test</scope>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
@@ -50,6 +52,10 @@
 				<version>${uima-version}</version>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.uima</groupId>
 				<artifactId>PearPackagingMavenPlugin</artifactId>
 				<version>${uima-version}</version>
@@ -58,7 +64,7 @@
 				<groupId>org.apache.uima</groupId>
 				<artifactId>uimafit-maven-plugin</artifactId>
 				<version>${uimafit-version}</version>
-			</plugin>
+			</plugin>			
 		</plugins>
 
 		<pluginManagement>
@@ -100,22 +106,42 @@
 				</plugin>
 				<plugin>
 					<groupId>org.apache.uima</groupId>
-					<artifactId>uimafit-maven-plugin</artifactId>		
+					<artifactId>uimafit-maven-plugin</artifactId>
 					<configuration>
 						<encoding>${project.build.sourceEncoding}</encoding>
-						<outputDirectory>${basedir}/target/pearPackaging/desc</outputDirectory>		
-						<addTypeSystemDescriptions>EMBEDDED</addTypeSystemDescriptions>				
-					</configuration>		
-					 <executions>
-					    <execution>
-					      <id>default</id>
-					      <phase>process-classes</phase>
-					      <goals>					      
-					        <goal>generate</goal>
-					      </goals>
-					    </execution>
-					  </executions>
-				</plugin>								
+						<outputDirectory>${basedir}/target/pearPackaging/desc</outputDirectory>
+						<addTypeSystemDescriptions>EMBEDDED</addTypeSystemDescriptions>
+					</configuration>
+					<executions>
+						<execution>
+							<id>default</id>
+							<phase>process-classes</phase>
+							<goals>
+								<goal>generate</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>copy-dependencies</id>
+							<phase>package</phase>
+							<goals>
+								<goal>copy-dependencies</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${basedir}/target/pearPackaging/lib</outputDirectory>
+								<overWriteSnapshots>true</overWriteSnapshots>						
+								<includeScope>runtime</includeScope>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
 				<plugin>
 					<groupId>org.apache.uima</groupId>
 					<artifactId>PearPackagingMavenPlugin</artifactId>
