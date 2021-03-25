@@ -4,18 +4,23 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.averbis.tutorials</groupId>
 	<artifactId>hello-world-pear</artifactId>
-	<version>1.1.0-SNAPSHOT</version>
+	<version>2.0.0-SNAPSHOT</version>
 
 	<properties>
-		<uima-version>2.10.3</uima-version>
-		<uimafit-version>2.4.0</uimafit-version>
-		<maven-build-helper-plugin-version>3.0.0</maven-build-helper-plugin-version>
+		<uima-version>3.1.1</uima-version>
+		<uimafit-version>3.1.0</uimafit-version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
+		<!-- 
+		  - The UIMA Framework is a dependency with the scope "provided" because the PEAR will 
+		  - eventually be installed into an UIMA installation, so it must be there. It serves
+		  - as the gateway by with different UIMA components/PEARs can communicate with each other,
+		  - so a single instance of the framework must be shared between them.
+		  -->
 		<dependency>
 			<groupId>org.apache.uima</groupId>
 			<artifactId>uimaj-core</artifactId>
@@ -23,11 +28,15 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!--
+		  - uimaFIT is a convenience API building on top of UIMA. So it is not part of the shared
+		  - framework and cannot be expected to be available. Hence, it is a regular dependency
+		  - which implicitly has the scope "compile". 
+		  -->
 		<dependency>
 			<groupId>org.apache.uima</groupId>
 			<artifactId>uimafit-core</artifactId>
 			<version>${uimafit-version}</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -36,131 +45,136 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>${maven-build-helper-plugin-version}</version>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.uima</groupId>
 				<artifactId>jcasgen-maven-plugin</artifactId>
 				<version>${uima-version}</version>
+				<executions>
+					<execution>
+						<!--
+						  - The jcasgen-maven-plugin generates Java classes representing the types defined in
+						  - the "HelloWorldTypesystem.xml". These classes are optional, but they enable
+						  - type-safe implementations of UIMA components.
+						  -->
+						<id>generate-jcas-classes</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<typeSystemIncludes>
+								<typeSystemInclude>src/main/resources/de/averbis/tutorials/typesystem/HelloWorldTypesystem.xml</typeSystemInclude>
+							</typeSystemIncludes>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
+
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<!--
+						  - For convenience, we include the generated source for for the UIMA type Java classes
+						  - from the jcasgen-maven-plugin in the sources JAR.
+						  -->
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/java/</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.uima</groupId>
-				<artifactId>PearPackagingMavenPlugin</artifactId>
-				<version>${uima-version}</version>
-			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.uima</groupId>
 				<artifactId>uimafit-maven-plugin</artifactId>
 				<version>${uimafit-version}</version>
-			</plugin>			
+				<executions>
+					<execution>
+						<!-- 
+						  - Generate the UIMA component descriptor XML file which we refer to in the next step
+						  - as the main component descriptor for the PEAR file. Because uimaFIT-based 
+						  - auto-detection of type systems does not work with PEAR files, we embed the 
+						  - type system directly in the UIMA component descriptor. We also run the "enhance"
+						  - goal before the "generate" goal to pick up the JavaDoc of the component Java class
+						  - and of the parameters inside and use them as component and parameter documentation
+						  - in the generated UIMA component descriptor XML file.
+						  -->
+						<id>generate-component-descriptors</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>enhance</goal>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/pearPackaging/desc</outputDirectory>
+							<addTypeSystemDescriptions>EMBEDDED</addTypeSystemDescriptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.1.2</version>
+				<executions>
+					<execution>
+						<!-- 
+						  - Gather together all the compile/runtime dependencies of the PEAR file and stage them
+						  - into the default directory where the PearPackagingMavenPlugin will be looking for
+						  - them.
+						  -->
+						<id>stage-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/pearPackaging/lib</outputDirectory>
+							<overWriteSnapshots>true</overWriteSnapshots>
+							<includeScope>runtime</includeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.uima</groupId>
+				<artifactId>PearPackagingMavenPlugin</artifactId>
+				<version>${uima-version}</version>
+				<executions>
+					<execution>
+						<!-- 
+						  - As a final step, a PEAR file is packaged up including the UIMA component XML
+						  - descriptor and the dependencies we have prepared in the previous steps.
+						  -->
+						<id>package-pear</id>
+						<phase>package</phase>
+						<goals>
+							<goal>package</goal>
+						</goals>
+						<configuration>
+							<mainComponentDesc>desc/de/averbis/tutorials/HelloWorldAnnotator.xml</mainComponentDesc>
+							<componentId>${project.artifactId}-${project.version}</componentId>
+							<datapath>$main_root/resources</datapath>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
-
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>build-helper-maven-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>add-source</id>
-							<phase>generate-sources</phase>
-							<goals>
-								<goal>add-source</goal>
-							</goals>
-							<configuration>
-								<sources>
-									<source>${project.build.directory}/generated-sources/java/</source>
-								</sources>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.uima</groupId>
-					<artifactId>jcasgen-maven-plugin</artifactId>
-					<executions>
-						<execution>
-							<phase>generate-sources</phase>
-							<configuration>
-								<typeSystemIncludes>
-									<typeSystemInclude>src/main/resources/de/averbis/tutorials/typesystem/HelloWorldTypesystem.xml</typeSystemInclude>
-								</typeSystemIncludes>
-							</configuration>
-							<goals>
-								<goal>generate</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.uima</groupId>
-					<artifactId>uimafit-maven-plugin</artifactId>
-					<configuration>
-						<encoding>${project.build.sourceEncoding}</encoding>
-						<outputDirectory>${basedir}/target/pearPackaging/desc</outputDirectory>
-						<addTypeSystemDescriptions>EMBEDDED</addTypeSystemDescriptions>
-					</configuration>
-					<executions>
-						<execution>
-							<id>default</id>
-							<phase>process-classes</phase>
-							<goals>
-								<goal>generate</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>copy-dependencies</id>
-							<phase>package</phase>
-							<goals>
-								<goal>copy-dependencies</goal>
-							</goals>
-							<configuration>
-								<outputDirectory>${basedir}/target/pearPackaging/lib</outputDirectory>
-								<overWriteSnapshots>true</overWriteSnapshots>						
-								<includeScope>runtime</includeScope>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.uima</groupId>
-					<artifactId>PearPackagingMavenPlugin</artifactId>
-					<extensions>true</extensions>
-					<executions>
-						<execution>
-							<phase>package</phase>
-							<configuration>
-								<mainComponentDesc>desc/de/averbis/tutorials/HelloWorldAnnotator.xml</mainComponentDesc>
-								<componentId>${project.artifactId}-${project.version}</componentId>
-								<datapath>$main_root/resources</datapath>
-							</configuration>
-							<goals>
-								<goal>package</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 </project>
